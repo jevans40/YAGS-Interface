@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<title>YAGS Interface</title>
+
+{% endblock %}
+
+
+{% block body %}
+<div>
+    <h1>YAGS Interface</h1>
+
+    <form action="/backend/" method="POST">
+        <div class="textdiv">
+            
+            <div>
+                    <textarea id="prompt" name="prompt" rows="40" 
+                    placeholder="Enter text prompt here">{{prompt}}</textarea>
+            </div>
+            <div class="right">
+                <input type="submit" value="Generate Text">
+            </div>
+        </div>
+        <div>
+            <div class="container">
+
+                <h2>Common Options</h2>
+                <div class="slidecontainer">
+                    <p>Max Gen</p>
+                    <input type="range" min="1" max="256" value="{{options.maxGen}}" class="slider" name="mGen" 
+                    oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.maxGen}}</output>
+                </div>
+                <div class="slidecontainer">
+                    <p>Temperature</p>
+                    <input type="range" step="0.05" min="0" max="2.5" value="{{options.temperature}}" class="slider"
+                    name="temp" oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.temperature}}</output>
+                </div>
+                <div class="slidecontainer">
+                    <p>Repetition Penalty</p>
+                    <input type="range" step="0.1" min="0" max="2" value="{{options.rep_pen}}" class="slider" name="rPen"
+                    oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.rep_pen}}</output>
+                </div>
+                <div class="slidecontainer">
+                    <p>Number of results to return</p>
+                    <input type="range" step="1" min="1" max="3" value="{{options.seq}}" class="slider" name="num"
+                        oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.seq}}</output>
+                </div>
+            </div>
+            <div class="container">
+
+                <h2>Advanced Options</h2>
+                <div class="slidecontainer">
+                    <p>top_p</p>
+                    <input type="range" step="0.1" min="0" max="1" value="{{options.top_p}}" class="slider" name="topP"
+                    oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.top_p}}</output>
+                </div>
+                <div class="slidecontainer">
+                    <p>top_k</p>
+                    <input type="range" step="0.1" min="0" max="1" value="{{options.top_k}}" class="slider" name="topK"
+                    oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.top_k}}</output>
+                </div>
+                <div class="slidecontainer">
+                    <p>Tail free sampling</p>
+                    <input type="range" step="0.1" min="0" max="1" value="{{options.tfs}}" class="slider" name="tailFS"
+                    oninput="this.nextElementSibling.value = this.value">
+                    <output>{{options.tfs}}</output>
+                </div>
+                <p>My css is buuutifuuul</p>
+            </div>
+            </div>
+        </form>
+    </div>
+    
+    {% endblock %}
