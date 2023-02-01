@@ -4,6 +4,21 @@ import requests
 
 app = Flask(__name__)
 
+GPTServerAddress = "http://localhost:5001/query/"
+
+'''
+GPTquery:
+Query struct to send to gpt server.
+@Class variables
+    inputText: str
+    maxGen: int
+    rep_pen: float
+    top_p: float
+    top_k: float
+    tfs: float
+    temperature: float
+    seq: int
+'''
 class GPTquery(object):
     def __init__(self, 
                 inputText : str, 
@@ -24,15 +39,31 @@ class GPTquery(object):
         self.temperature = temperature if temperature > 0 else 0
         self.seq = seq if seq >= 1 else 1
 
+'''
+GPTreturn:
+    Expected result from the GPT server
+@Class variables
+    OutputText: str
+'''
 class GPTreturn(object):
     def __init__(self,OutputText):
         self.OutputText = OutputText
 
+
+'''
+Default
+Displays homepage and default options
+'''
 @app.route("/", methods=["GET","POST"])
 def index():
     defaultOptions = GPTquery("")
     return render_template('index.html',options=defaultOptions)
 
+
+'''
+backend/ 
+Sends query to backend and listens for response
+'''
 @app.route("/backend/",methods=["GET","POST"])
 def backend():
     CurrentOptions = GPTquery("",
@@ -47,7 +78,7 @@ def backend():
         prompt = request.form['prompt']
         CurrentOptions.inputText = prompt
         query = CurrentOptions
-        res = requests.post("http://localhost:5001/query/",json=query.__dict__)
+        res = requests.post(GPTServerAddress,json=query.__dict__)
         print(f"Got response! {res}")
         if res.status_code == 200:
             txt = GPTreturn(**loads(res.text))
